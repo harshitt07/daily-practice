@@ -10,7 +10,9 @@ using namespace std;
 void topologicalSort(vector<int> Adj[], 
                      vector<int> &inDegree, int N) {
     
-    // Initialise the queue to traverse
+    // Initialise the priority-queue to get
+    // topological sort in lexicographical
+    // order if it exists
     priority_queue<int, vector<int>, greater<int>> Q;
 
     // To store the topological sort
@@ -121,4 +123,19 @@ int main() {
 // 6 7
 
 // Output:
-// 1 3 6 2 4 5 8 7 9
+// 1 2 3 4 5 6 7 8 9
+
+// Input:
+// 8
+// 9
+// 1 4
+// 1 2
+// 4 2
+// 4 3
+// 3 2
+// 5 2
+// 3 5
+// 8 2
+// 8 6
+// Output:
+// 1 4 3 5 7 8 2 6 
