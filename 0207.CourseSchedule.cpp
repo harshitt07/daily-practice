@@ -1,6 +1,5 @@
 // Problem Link: https://leetcode.com/problems/course-schedule/
 // Approach: Backtracking + DFS
-
 class Solution {
 public:
     
@@ -38,7 +37,8 @@ public:
         return false;
     }
     
-    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+    bool canFinish(int numCourses, 
+                   vector<vector<int>>& prerequisites) {
         
         int N = numCourses;
         
@@ -69,3 +69,80 @@ public:
         return true;
     }
 };
+
+// Time Complexity: O(E + V^2)
+
+// Problem Link: https://leetcode.com/problems/course-schedule/
+// Approach: Optimized DFS with extra space
+class Solution {
+public:
+    
+    // DFS Traversal to check cycle with node src
+    bool dfs(int src, vector<int> Adj[], 
+             vector<bool> &vis, vector<bool> &checkedNode) {
+        
+        // If current node src is checked
+        // then it doesn't contains cycle
+        // with this node
+        if(checkedNode[src]) return false;
+       
+        // Found Cycle
+        if(vis[src]) return true;
+        
+        // Backtracking step
+        vis[src] = true;
+        
+        bool ans = false;
+        
+        // Traverse the adjacency list
+        // of src node
+        for(auto &child : Adj[src]) {
+            
+            // Recursive Call for
+            // child node
+            ans = dfs(child, Adj, 
+                           vis, checkedNode);
+            
+            // If cycle found then break;
+            if(ans) break;
+        }
+        
+        // Unmarked the node src
+        vis[src] = false;
+        
+        // Marked this node as checked
+        checkedNode[src] = true;
+        
+        return ans;        
+    }
+    
+    bool canFinish(int numCourses, 
+                   vector<vector<int>>& prerequisites) {
+        
+        int N = numCourses;
+        
+        // For adjacency list
+        vector<int> Adj[N];
+        
+        // Create Directed Graph
+        for(auto &it : prerequisites) {
+            Adj[it[1]].push_back(it[0]);            
+        }
+        
+        vector<bool> vis(N, false);
+        vector<bool> checkedNode(N, false);
+        
+        for(int i = 0; i < N; i++) {
+            
+            // Check cycle using DFS
+            // If found then return false
+            if(dfs(i, Adj, vis, checkedNode)) {
+                    return false;
+                }
+        }
+        
+        return true;
+    }
+};
+
+// Time Complexity: O(E + V)
