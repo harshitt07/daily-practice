@@ -1,15 +1,18 @@
-// Problem Link: https://leetcode.com/problems/ugly-number-iii/
-// Approach: Binary Search
+#include "bits/stdc++.h"
+#define lli long long int
+#define fo(i, a, b) for(i = a; i < b; i++)
+#define Fo(i, a, b) for(i = a; i > b-1; i--)
+using namespace std;
 
 class Solution {
 public:
     
     // To find the LCM
-    long long int lcm(long long int a, long long int b) {
+    lli lcm(lli a, lli b) {
         
         int  gcd = __gcd(a, b);
         
-        long long int x = a*b;
+        lli x = a*b;
         
         return x/gcd;
         
@@ -53,3 +56,17 @@ public:
         return high;
     }
 };
+
+// Driver Code
+int main() {
+
+    // Object of Class
+    Solution *S = new Solution();
+
+    int N = 5;
+    int a = 2, b = 3, c = 5;
+
+    // Function Call
+    cout << S->nthUglyNumber(N, a, b, c);
+    return 0;
+}
